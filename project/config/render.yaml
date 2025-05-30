@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: batin-assistant-n8n
+    env: node
+    plan: starter
+    buildCommand: npm install n8n -g
+    startCommand: n8n start
+    envVars:
+      - key: N8N_PORT
+        value: 5678
+      - key: WEBHOOK_URL
+        value: https://batin-assistant-n8n.onrender.com
+      - key: N8N_BASIC_AUTH_ACTIVE
+        value: true
+      - key: N8N_BASIC_AUTH_USER
+        fromDatabase: name: batin-db
+      - key: DATABASE_TYPE
+        value: postgresdb
+    autoDeploy: true
+    
+  - type: pserv
+    name: batin-db
+    databaseName: batin_assistant
+    plan: free 
